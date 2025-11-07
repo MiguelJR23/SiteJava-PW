@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cálculo de Idade</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+  
+  body {
+    margin: 0; 
+    font-family: 'Luckiest Guy', cursive;
+    background-color: #a6d4cd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 10px;
+    color: #0d3833;
+  }
+
+  h1 {
+    font-weight: 900;
+    font-size: 3em;
+    margin: 25px 0 40px 0;
+    background: #52776e;
+    padding: 30px 40px;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 1.2em;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .content {
+    width: 280px;
+    max-width: 90%;
+    background-color: #f0faf7;
+    border-radius: 10px;
+    padding: 25px 20px 30px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 800;
+    font-size: 1.2em;
+    color: #0d3833;
+  }
+
+  input[type=text], input[type=date] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 6px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #52776e;
+    box-sizing: border-box;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.4em;
+    font-weight: 900;
+    background-color: #52776e;
+    color: #f0faf7;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background-color: #466a65;
+  }
+
+  #resultado {
+    margin-top: 20px;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #0d3833;
+    text-align: center;
+  }
+
+  #btnJogo {
+    display: none;
+    margin-top: 15px;
+    background-color: #466a65;
+  }
+</style>
+</head>
+<body>
+
+<h1>Qantos anos <span style="font-weight: normal;">você</span><span style="font-weight: normal;"> tem</span>?</h1>
+
+<div class="content">
+  <label for="nome">Insira seu nome</label>
+  <input type="text" id="nome" placeholder="Nome completo" required />
+
+  <label for="dataNascimento">Insira sua data de nascimento</label>
+  <input type="date" id="dataNascimento" required />
+
+  <button onclick="calcularIdade()">Iniciar</button>
+
+  <div id="resultado"></div>
+  <button id="btnJogo" onclick="irParaJogo()">Ir para o jogo</button>
+</div>
+
+<script>
+  function calcularIdade() {
+    const nome = document.getElementById('nome').value.trim();
+    const dataNascimento = document.getElementById('dataNascimento').value;
+    const resultado = document.getElementById('resultado');
+    const botaoJogo = document.getElementById('btnJogo');
+
+    if (!nome) {
+      alert('Por favor, insira seu nome.');
+      return;
+    }
+    if (!dataNascimento) {
+      alert('Por favor, insira sua data de nascimento.');
+      return;
+    }
+
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+
+    localStorage.setItem('nomeUsuario', nome);
+    localStorage.setItem('idadeUsuario', idade);
+
+    resultado.textContent = `Olá, ${nome}! Sua idade é ${idade} anos.`;
+    botaoJogo.style.display = 'block';
+  }
+
+  function irParaJogo() {
+    window.location.href = 'par-impar.html';
+  }
+</script>
+</body>
+</html>
